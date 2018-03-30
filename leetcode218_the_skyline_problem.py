@@ -1,5 +1,10 @@
 # https://leetcode.com/problems/the-skyline-problem/description/
 
+# Caveats:
+# Before updating, must check
+# 1. if the height and xcor is different from the previous value, and
+# 2. if the node to be deleted has the same begin and end coordinates (check b4)
+
 class Maxheap:
     def __init__(self):
         self.list = []
