@@ -23,8 +23,11 @@ Zebra (Codeforces 949a)
 ### Dynamic programming
 
 | -------------- | ------------------------- | ----------------- | --------- |
+
 | Climbing Stairs | Min Cost Climbing the Stairs | Longest Increasing Subsequence | Maximum Pathsum |
+
 | Edit Distance | Maximum Subarray @ | Continuous Subarray Sum @ | Longest Valid parentheses @ |
+
 | Distinct Subsequence @@@ | Class Sleep (Codeforces 961b) |
 
 ### Union Find Disjoint Set
