@@ -21,7 +21,7 @@ Jumping Game 2 @@
 Zebra (Codeforces 949a)
 
 ### Dynamic programming
-
+|  |  |  |
 | -------------- | ------------------------- | ----------------- | --------- |
 
 | Climbing Stairs | Min Cost Climbing the Stairs | Longest Increasing Subsequence | Maximum Pathsum |
