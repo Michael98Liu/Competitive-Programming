@@ -2,33 +2,28 @@
 Competitive programming problems from various origins.
 
 ### Two Pointers
-Bear and Steady Gene
-
-Longest Substring Without Repeating Characters
+| | | |
+| -------------- | ------------------------- | ----------------- |
+| Bear and Steady Gene | Longest Substring Without Repeating Characters |
 
 ### Binary search
-Skyline Problem @@
-
-Merge k Sorted Lists
+| | | |
+| -------------- | ------------------------- | ----------------- |
+| Skyline Problem @@ | Merge k Sorted Lists |
 
 ### Greedy Algorithm
-Buy and Sell Stock 2
-
-Jumping Game
-
-Jumping Game 2 @@
-
-Zebra (Codeforces 949a)
+| | | |
+| -------------- | ------------------------- | ----------------- |
+| Buy and Sell Stock 2 | Jumping Game | Jumping Game 2 @@ |
+| Zebra (Codeforces 949a) |
 
 ### Dynamic programming
-|  |  |  |
-| -------------- | ------------------------- | ----------------- | --------- |
-
-| Climbing Stairs | Min Cost Climbing the Stairs | Longest Increasing Subsequence | Maximum Pathsum |
-
-| Edit Distance | Maximum Subarray @ | Continuous Subarray Sum @ | Longest Valid parentheses @ |
-
-| Distinct Subsequence @@@ | Class Sleep (Codeforces 961b) |
+| | | |
+| -------------- | ------------------------- | ----------------- |
+| Climbing Stairs | Min Cost Climbing the Stairs | Longest Increasing Subsequence | 
+| Maximum Pathsum | Edit Distance | Maximum Subarray @ |
+| Continuous Subarray Sum @ | Longest Valid parentheses @ | Distinct Subsequence @@@ |
+| Class Sleep (Codeforces 961b) |
 
 ### Union Find Disjoint Set
 Graph Connectivity
