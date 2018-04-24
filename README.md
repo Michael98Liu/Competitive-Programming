@@ -33,9 +33,10 @@ Zebra (Codeforces 949a)
 ### Union Find Disjoint Set
 Graph Connectivity
 
-### Breadth First Search
-Symmetric Tree
-
+### Graph
+|  |  |  |
+| -------------- | ------------------------- | ----------------- | --------- |
+| Dominator @ (UVa11902) | Symmetric Tree | Surrounded Region |
 
 
 ### *Notations*
