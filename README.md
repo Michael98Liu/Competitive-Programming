@@ -20,7 +20,7 @@ Competitive programming problems from various origins.
 ### Dynamic programming
 | | | |
 | -------------- | ------------------------- | ----------------- |
-| Climbing Stairs | Min Cost Climbing the Stairs | Longest Increasing Subsequence | 
+| Climbing Stairs | Min Cost Climbing the Stairs | Longest Increasing Subsequence |
 | Maximum Pathsum | Edit Distance | Maximum Subarray @ |
 | Continuous Subarray Sum @ | Longest Valid parentheses @ | Distinct Subsequence @@@ |
 | Class Sleep (Codeforces 961b) |
