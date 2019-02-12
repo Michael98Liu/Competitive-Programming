@@ -5,7 +5,6 @@ system. The judging system behavior might be different.
 """
 
 from __future__ import print_function
-import random
 import subprocess
 import sys
 
@@ -36,16 +35,27 @@ Windows users:
   line below.
 """
 
-# Right now, there are 3 test cases with the minimum prepared area A in each
-# test case being 10. We encourage you to modify LIST_OF_A for more thorough
-# testing. Note that A[0] is the A given for the first test case, A[1] is for
-# the second test case, etc. In real judging, A is the same for all test cases
-# within the same test set.
-LIST_OF_A = [10, 10, 10]
-NUM_TEST_CASES = len(LIST_OF_A)
+# CASES is a list of test cases.  They were not generated the same way as the
+# real data.
+#
+# Each case contains a list of flavor preferences for each customer.
+#
+# For example, in the first case, there are 3 customers.  The first customer
+# likes flavors 1 and 2, the second customer likes flavors 0 and 2, and the
+# third customer likes all three flavors.
+#
+# MAX contains the maximum number of lollipops it is possible to sell for each
+# test case in CASES.
+CASES = [[[1,2],[0,2],[0,1,2]],
+  [[0,1],[]],
+  [[1,3],[0,2],[1,3],[0,2]],
+  [[0,1,2,4],[1,3,4],[0,1,4],[1,2,3,4],[1]],
+  [[2],[4],[1,4],[0,2],[0,3]]]
+MAX = [3,1,4,5,5]
+NUM_TEST_CASES = len(CASES)
 # You can set PRINT_INTERACTION_HISTORY to True to print out the interaction
 # history between your code and the judge.
-PRINT_INTERACTION_HISTORY = False
+PRINT_INTERACTION_HISTORY = True
 
 
 """Helper functions"""
@@ -89,9 +99,9 @@ def CheckSubprocessExit(p, case_id):
 def WrongAnswerExit(p, case_id, error_msg):
   print("Case #{} failed: {}".format(case_id, error_msg))
   try:
-    JudgePrint(p, "-1 -1")
+    JudgePrint(p, "-1")
   except IOError:
-    print("Failed to print -1 -1 because your code finished already.")
+    print("Failed to print -1 because your code finished already.")
   WaitForSubprocess(p)
   sys.exit(-1)
 
@@ -129,83 +139,61 @@ except Exception as e:
   sys.exit(-1)
 
 JudgePrint(p, NUM_TEST_CASES)
-for test_case_id in range(1, NUM_TEST_CASES + 1):
+for i in range(NUM_TEST_CASES):
+  case = CASES[i]
+  N = len(case)
   if PRINT_INTERACTION_HISTORY:
-      print("Test Case #{}:".format(test_case_id))
-  # Different test case has different seed.
-  random.seed(test_case_id)
-  A = LIST_OF_A[test_case_id - 1]
-  JudgePrint(p, A)
-  test_case_passed = False
-  random.seed(test_case_id)
-  field = set()
-  prepared_cells_count = 0
-  northmost = None
-  for _ in range(1000):
-    # Detect whether the subprocess has finished running.
-    CheckSubprocessExit(p, test_case_id)
+    print("Test Case #{}:".format(i + 1))
+  JudgePrint(p, "{}".format(N))
+  used = [False] * N
+  sold = 0
+  for j in range(N):
+    line = case[j]
+    JudgePrint(p, ' '.join(map(str,[len(line)]+line)))
+    # Detect whether the your code has finished running.
+    CheckSubprocessExit(p, i + 1)
 
     user_input = None
     try:
       user_input = p.stdout.readline()
-      i, j = map(int, user_input.split())
+      q = int(user_input)
     except:
       # Note that your code might finish after the first CheckSubprocessExit
       # check above but before the readline(), so we will need to again check
       # whether your code has finished.
-      CheckSubprocessExit(p, test_case_id)
+      CheckSubprocessExit(p, i + 1)
       exit_msg = ""
       if user_input == "":
-        exit_msg = (
-            "Read an empty string as opposed to 2 integers for cell location. "
-            "This might happen because your code exited early, or printed an "
-            "extra newline character.")
+        exit_msg = ("Read an empty string for the flavor. This might happen "
+                    "because your code exited early, or printed an extra "
+                    "newline character.")
       elif user_input is None:
         exit_msg = (
-            "Unable to read the cell location. This might happen because your "
+            "Unable to read the flavor. This might happen because your "
             "code exited early, printed an extra new line character, or did "
             "not print the output correctly.")
       else:
-        exit_msg = (
-            "Failed to read the cell location. Expected two integers ending "
-            "with one newline character. Read \"{}\" (quotes added to isolate "
-            "output of your program) instead.".format(user_input))
-      WrongAnswerExit(p, test_case_id, exit_msg)
+        exit_msg = ("Failed to read the flavor. Expected an integer ending "
+                    "with one new line character. Read \"{}\" (quotes added to "
+                    "isolate your output) instead.").format(user_input)
+      WrongAnswerExit(p, i + 1, exit_msg)
     if PRINT_INTERACTION_HISTORY:
-      print("Judge reads:", user_input.rstrip())
-    if (i <= 1) or (i >= 1000) or (j <= 1) or (j >= 1000):
-      WrongAnswerExit(p, test_case_id, "Your input is out of range [2, 999].")
-    prepared_i = random.randint(i - 1, i + 1)
-    prepared_j = random.randint(j - 1, j + 1)
-    if not (prepared_i, prepared_j) in field:
-      if northmost is None:
-        northmost = prepared_i
-        southmost = prepared_i
-        westmost = prepared_j
-        eastmost = prepared_j
-      else:
-        northmost = min(prepared_i, northmost)
-        southmost = max(prepared_i, southmost)
-        westmost = min(prepared_j, westmost)
-        eastmost = max(prepared_j, eastmost)
-      field.add((prepared_i, prepared_j))
-      prepared_cells_count += 1
-      if (prepared_cells_count >=
-          A) and (prepared_cells_count == (southmost - northmost + 1) *
-                  (eastmost - westmost + 1)):
-        JudgePrint(p, "0 0")
-        test_case_passed = True
-        break
-    JudgePrint(p, "{} {}".format(prepared_i, prepared_j))
-  if not test_case_passed:
-    WrongAnswerExit(p, test_case_id,
-                    "Failed to prepare the rectangle within 1000 tries.")
+      print("Judge reads:", q)
+    if (q < -1) or (q >= N):
+      WrongAnswerExit(p, i + 1, "Flavor {} is out of range!".format(q))
+    if q != -1:
+      if q not in line:
+        WrongAnswerExit(p, i + 1, "Flavor {} was not liked by the customer!".format(q))
+      if used[q]:
+        WrongAnswerExit(p, i + 1, "Flavor {} was already sold!".format(q))
+      used[q] = True
+      sold = sold + 1
+  print("Case {}/{}: sold {} out of a possible {} lollipops.".format(i+1, NUM_TEST_CASES, sold, MAX[i]))
 
 extra_output = p.stdout.readline()
 WaitForSubprocess(p)
-if extra_output == "":
-  print("Congratulations! All test cases passed :)")
-else:
+if extra_output != "":
   print("Wrong Answer because of extra output:")
   sys.stdout.write(extra_output)
   sys.exit(-1)
+
